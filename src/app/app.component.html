@@ -1,0 +1,48 @@
+<div class="container">
+  <br>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <br>
+          <form [formGroup]="groceryForm" (ngSubmit)="post()">
+            <input type="text"
+            #updateGrocery
+            trim
+            [trimOnWriteValue]="false"
+            formControlName="groceryItemName"
+            class="form-control"
+            placeholder="Add Grocery">
+            <p
+            *ngIf="!groceryForm.get('groceryItemName').valid && groceryForm.get('groceryItemName').touched">
+            Please enter a grocery item name</p>
+            <button mat-icon-button color="warn" type="submit" [disabled]="!groceryForm.valid">
+              <mat-icon>add</mat-icon>
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="row"  *ngFor="let grocery of groceries$ | async">
+          <div class="col-md-6">
+            <ul>
+              <li>
+                {{grocery.id}} - {{grocery.item}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <a type="button" (click)="update(grocery.id, updateGrocery.value)">
+              <span>
+                <mat-icon class="mat-18">edit</mat-icon>
+              </span>
+            </a>
+            <a type="button" (click)="delete(grocery.id)">
+              <span>
+                <mat-icon class="mat-18" style="color: red;">delete</mat-icon>
+              </span>
+            </a>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
